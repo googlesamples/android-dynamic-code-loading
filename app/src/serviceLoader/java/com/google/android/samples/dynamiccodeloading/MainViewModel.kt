@@ -60,7 +60,10 @@ class MainViewModel(app: Application) : AbstractMainViewModel(app) {
 
         // Ask ServiceLoader for concrete implementations of StorageFeature.Provider
         // Explicitly use the 2-argument version of load to enable R8 optimization.
-        val serviceLoader = ServiceLoader.load(StorageFeature.Provider::class.java, null)
+        val serviceLoader = ServiceLoader.load(
+            StorageFeature.Provider::class.java,
+            StorageFeature.Provider::class.java.classLoader
+        )
 
         // Explicitly ONLY use the .iterator() method on the returned ServiceLoader to enable R8 optimization.
         // When these two conditions are met, R8 replaces ServiceLoader calls with direct object instantiation.
