@@ -23,5 +23,8 @@
             dist:title="@string/title_storage">
         <dist:fusing dist:include="true"/>
     </dist:module>
+    <application>
+        <activity android:name=".StorageActivity" />
+    </application>
 </manifest>
 
