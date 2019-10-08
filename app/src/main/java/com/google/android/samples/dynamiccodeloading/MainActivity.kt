@@ -16,12 +16,16 @@
  */
 package com.google.android.samples.dynamiccodeloading
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import java.lang.Exception
 
 /**
  * The single, main activity of this sample.
@@ -38,6 +42,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var saveButton: Button
 
     private lateinit var viewModel: MainViewModel
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.storage_activity -> {
+                try {
+                    val intent = Intent(this, Class.forName("com.google.android.samples.storage.StorageActivity"))
+                    startActivity(intent)
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

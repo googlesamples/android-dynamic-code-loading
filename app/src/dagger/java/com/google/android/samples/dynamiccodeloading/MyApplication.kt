@@ -16,16 +16,26 @@
  */
 package com.google.android.samples.dynamiccodeloading
 
-import androidx.annotation.MainThread
-import com.google.android.play.core.splitcompat.SplitCompatApplication
+import com.google.android.play.core.splitcompat.SplitCompat
 import com.google.android.samples.dynamiccodeloading.di.BaseComponent
 import com.google.android.samples.dynamiccodeloading.di.DaggerBaseComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-class MyApplication : SplitCompatApplication() {
+class MyApplication : DaggerApplication() {
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return baseComponent
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        SplitCompat.install(this)
+        baseComponent.inject(this)
+    }
+
     val baseComponent: BaseComponent by lazy {
         DaggerBaseComponent.builder()
             .application(this)
-            .logger(MainLogger)
             .build()
     }
 }

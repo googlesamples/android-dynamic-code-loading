@@ -18,6 +18,7 @@ package com.google.android.samples.storage
 
 import android.content.SharedPreferences
 import com.google.android.samples.dynamiccodeloading.Logger
+import com.google.android.samples.dynamiccodeloading.MyApplication
 import com.google.android.samples.dynamiccodeloading.StorageFeature
 import com.google.android.samples.storage.di.DaggerStorageComponent
 import javax.inject.Inject
@@ -47,7 +48,17 @@ class StorageFeatureImpl @Inject constructor(
      */
     companion object Provider : StorageFeature.Provider {
         override fun get(dependencies: StorageFeature.Dependencies): StorageFeature {
-            return DaggerStorageComponent.builder().dependencies(dependencies).build().storageFeature()
+            val component = DaggerStorageComponent.builder()
+                .dependencies(dependencies)
+                .build()
+
+            when (dependencies.getContext()) {
+                is MyApplication -> {
+                    component.inject(dependencies.getContext() as MyApplication)
+                }
+            }
+
+            return component.storageFeature()
         }
     }
 }

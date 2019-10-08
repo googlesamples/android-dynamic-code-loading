@@ -19,28 +19,26 @@ package com.google.android.samples.dynamiccodeloading.di
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import com.google.android.samples.dynamiccodeloading.Logger
-import com.google.android.samples.dynamiccodeloading.StorageFeature
-import com.google.android.samples.dynamiccodeloading.TAG
+import com.google.android.samples.dynamiccodeloading.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 
 const val PROVIDER_CLASS = "com.google.android.samples.storage.StorageFeatureImpl\$Provider"
 
-@Component(modules = [BaseModule::class])
-interface BaseComponent : StorageFeature.Dependencies {
+@Component(modules = [AndroidInjectionModule::class, BaseModule::class, BaseViewModelModule::class])
+interface BaseComponent : StorageFeature.Dependencies, AndroidInjector<MyApplication> {
 
     fun storageFeature(): StorageFeature?
 
     @Component.Builder
     interface Builder {
         @BindsInstance fun application(application: Application): Builder
-        @BindsInstance fun logger(logger: Logger): Builder
         fun build(): BaseComponent
     }
-
 }
 
 @Module
@@ -72,4 +70,8 @@ object BaseModule {
     @Provides
     @JvmStatic
     fun appContextProvider(application: Application): Context = application
+
+    @Provides
+    @JvmStatic
+    fun loggerProvider(): Logger = MainLogger
 }

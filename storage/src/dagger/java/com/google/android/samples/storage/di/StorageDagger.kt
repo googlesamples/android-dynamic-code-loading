@@ -18,19 +18,24 @@ package com.google.android.samples.storage.di
 
 import android.content.Context
 import android.preference.PreferenceManager
+import com.google.android.samples.dynamiccodeloading.MyApplication
 import com.google.android.samples.dynamiccodeloading.StorageFeature
+import com.google.android.samples.dynamiccodeloading.di.BaseViewModelModule
+import com.google.android.samples.storage.ActivityModule
 import com.google.android.samples.storage.StorageFeatureImpl
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [StorageModule::class],
+    modules = [AndroidInjectionModule::class, StorageModule::class, BaseViewModelModule::class, ActivityModule::class],
     dependencies = [StorageFeature.Dependencies::class] // needs dependencies passed in to create component
 )
-interface StorageComponent {
+interface StorageComponent : AndroidInjector<MyApplication> {
     fun storageFeature(): StorageFeature
 }
 
