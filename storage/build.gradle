@@ -3,13 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 25
     }
 
     buildTypes {
@@ -44,5 +41,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':app')
-    kapt 'com.google.dagger:dagger-compiler:2.16'
+    kapt 'com.google.dagger:dagger-compiler:2.43.1'
 }

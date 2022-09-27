@@ -21,7 +21,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * The single, main activity of this sample.
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         saveText = findViewById(R.id.saveText)
         saveButton = findViewById(R.id.saveButton)
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         incrementButton.setOnClickListener {
             viewModel.incrementCounter()
