@@ -57,15 +57,15 @@ object BaseModule {
         if (storageFeature != null){
             return storageFeature as StorageFeature
         }
-        try {
+        return try {
             // Get the instance of the StorageFeature.Provider, pass it the BaseComponent which fulfills the
             // StorageFeature.Dependencies contract, and get the StorageFeature instance in return.
             val provider = Class.forName(PROVIDER_CLASS).kotlin.objectInstance as StorageFeature.Provider
-            return provider.get(baseComponent)
+            provider.get(baseComponent)
                 .also { storageFeature = it } //cache the value for later calls
         } catch (e: ClassNotFoundException){
             Log.e(TAG, "Provider class not found", e)
-            return null
+            null
         }
     }
 
