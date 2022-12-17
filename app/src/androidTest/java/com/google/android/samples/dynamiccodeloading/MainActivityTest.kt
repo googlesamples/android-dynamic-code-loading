@@ -44,7 +44,7 @@ class MainActivityTest {
     @Before
     fun before() {
         PreferenceManager.getDefaultSharedPreferences(
-            InstrumentationRegistry.getInstrumentation().getTargetContext().applicationContext
+            InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         ).edit().clear().commit()
     }
 
@@ -62,7 +62,7 @@ class MainActivityTest {
 
         onView(withId(R.id.saveButton)).perform(click())
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(Runnable { mActivityTestRule.activity.recreate() })
+        InstrumentationRegistry.getInstrumentation().runOnMainSync({ mActivityTestRule.activity.recreate() })
 
         val textView = onView(withId(R.id.counterText))
         textView.check(matches(withText("3")))
